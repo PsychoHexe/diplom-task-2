@@ -33,7 +33,7 @@ public class OrderCreateApi {
 
     // Получение id ингридиента
     @Step("Запрашиваем id ингридиента")
-    public String getListIngredient(UserCreate model) {
+    public String getListIngredient(UserAuth model) {
         // Response response = loginUser(model);
         // model.setRefreshToken(response.then().extract().path("refreshToken")); // Сохраняем token в объект
         return model.getRefreshToken();
@@ -44,17 +44,17 @@ public class OrderCreateApi {
         return given()
                 .header("Content-type", "application/json")
                 .body(order)
-                .log().all() // Пишет в консоль отправляемый запрос
+                // .log().all() // Пишет в консоль отправляемый запрос
                 .when().post(ListOfConstants.ORDERS);
     }
 
-        @Step("Отправляем запрос на создание заказа API")
-    public Response createOrder(String token, OrderCreate order) {
+    @Step("Отправляем запрос на создание заказа API")
+    public Response createOrder(OrderCreate order, String userAccessToken) {
         return given()
-                .auth().oauth2(token)
+                .header("Authorization", userAccessToken)
                 .header("Content-type", "application/json")
                 .body(order)
-                .log().all() // Пишет в консоль отправляемый запрос
+                // .log().all() // Пишет в консоль отправляемый запрос
                 .when().post(ListOfConstants.ORDERS);
     }
 }

@@ -8,17 +8,18 @@ public class UserCreateApi {
 
     // Создание нового юзера
     @Step("Отправляем запрос на создание юзера API")
-    public Response createUser(UserCreate model) {
+    public Response registerUser(UserCreate model) {
         return given()
                 .header("Content-type", "application/json")
                 .body(model)
+                // .log().all()
                 .when()
                 .post(ListOfConstants.USER_REG);
     }
-    
+
     // Логин юзера
     @Step("Логинимся юзером")
-    public Response loginUser(UserCreate model) {
+    public Response loginUser(UserLogin model) {
         return given()
                 .header("Content-type", "application/json")
                 .body(model)
@@ -28,7 +29,7 @@ public class UserCreateApi {
 
     // Логfen юзера
     @Step("Выходим юзером")
-    public Response logoutUser(UserCreate model) {
+    public Response logoutUser(UserAuth model) {
         return given()
                 .header("Content-type", "application/json")
                 .body(model.getRefreshToken())
@@ -36,9 +37,9 @@ public class UserCreateApi {
                 .post(ListOfConstants.USER_LOGOUT);
     }
 
-    // Получение токена для выхода 
+    // Получение токена для выхода
     @Step("Запрашиваем токен для разлогирования юзера")
-    public String getUserRefreshToken(UserCreate model) {
+    public String getUserRefreshToken(UserAuth model) {
         Response response = loginUser(model);
         model.setRefreshToken(response.then().extract().path("refreshToken")); // Сохраняем token в объект
         return model.getRefreshToken();
@@ -46,7 +47,7 @@ public class UserCreateApi {
 
     // Получение токена для получить, обновить и удалить данные
     @Step("Запрашиваем токен для получить, обновить и удалить данные")
-    public String getUserAccessToken(UserCreate model) {
+    public String getUserAccessToken(UserAuth model) {
         Response response = loginUser(model);
         model.setAccessToken(response.then().extract().path("accessToken")); // Сохраняем token в объект
         return model.getAccessToken();
@@ -54,9 +55,10 @@ public class UserCreateApi {
 
     // Удаление юзера
     @Step("Удаляем юзера")
-    public Response deleteUser(UserCreate model) {
+    public Response deleteUser(UserAuth model) {
         String userAccessToken = getUserAccessToken(model);
         return given()
+                .header("Authorization", userAccessToken)
                 .when()
                 .delete(ListOfConstants.USER);
     }

@@ -87,7 +87,7 @@ public class CreateUserTest extends BaseUserForTest{
     @Description("ручка для создания пользователя /api/auth/register с отсутсвующим именем")
     public void newUserCreateWithoutNameNegativeTest() {
 
-        UserCreate userCreate = UserData.NEGATIVE_CREATE_LIST.get(3);
+        UserCreate userCreate = UserData.NEGATIVE_CREATE_LIST.get(2);
         Response response = api.registerUser(userCreate);
         checkCreateNegative(response);
 

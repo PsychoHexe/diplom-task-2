@@ -11,7 +11,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
-import taskapi.data.UserData;
 
 public class OrderCreateTest extends BaseForOrderTest {
 
@@ -92,17 +91,16 @@ public class OrderCreateTest extends BaseForOrderTest {
 
         getOrderBurgerRnd();
 
-        UserAuth user = new UserAuth(UserData.POSITIV_CREATE_LIST.get(0));
-        UserCreateApi userCreateApi = new UserCreateApi();
-
-        userCreateApi.registerUser(user);
-        String token = userCreateApi.getUserAccessToken(user);
+        UserAuth user = createUser();
+        
+        apiUser.registerUser(user);
+        String token = apiUser.getUserAccessToken(user);
 
         Response response = orderApi.createOrder(order, token);
         // System.out.println(response.asString());
 
         // Вывод в консоль body ответа от Api
-        userCreateApi.deleteUser(user);
+        apiUser.deleteUser(user);
         stepCheckOrderCreate(response);
     }
 
@@ -115,7 +113,12 @@ public class OrderCreateTest extends BaseForOrderTest {
 
         order = new OrderCreate(new ArrayList<>());
 
-        Response response = orderApi.createOrder(order);
+        UserAuth user = createUser();
+        
+        apiUser.registerUser(user);
+        String token = apiUser.getUserAccessToken(user);
+
+        Response response = orderApi.createOrder(order, token);
 
         // Вывод в консоль body ответа от Api
         // System.out.println(orderResponse.asString());
@@ -132,7 +135,12 @@ public class OrderCreateTest extends BaseForOrderTest {
 
         order = new OrderCreate(Arrays.asList(new Ingredient("null", "bun")));
 
-        Response response = orderApi.createOrder(order);
+        UserAuth user = createUser();
+
+        apiUser.registerUser(user);
+        String token = apiUser.getUserAccessToken(user);
+
+        Response response = orderApi.createOrder(order, token);
 
         // Вывод в консоль body ответа от Api
         // System.out.println(orderResponse.asString());

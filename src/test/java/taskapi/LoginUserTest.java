@@ -19,7 +19,7 @@ public class LoginUserTest extends BaseUserForTest{
 
     @Before
     public void userInitPositive(){
-        user = new UserAuth(UserData.POSITIV_CREATE_LIST.get(0));
+        user = createUser();
         //Добавляем юзера в список на удаление в after 
         deleteList.add(user);
         api.registerUser(user);
@@ -46,6 +46,7 @@ public class LoginUserTest extends BaseUserForTest{
     @DisplayName("Логин юзера (позитивный)")
     @Description("Юзер может залогиниться ручка для логина юзера/api/auth/login")
     public void newUserLoginPositiveTest() {
+        
         Response response = api.loginUser(user);
         
         checkRefTokenUser(response);        

@@ -15,4 +15,5 @@ public class BaseTest {
     public void setUp() {
         RestAssured.baseURI = ListOfConstants.URL;
     }
+
 }

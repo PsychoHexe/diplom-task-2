@@ -38,10 +38,8 @@ public class CreateUserTest extends BaseUserForTest{
     @DisplayName("Создание юзера (позитивный тест)")
     @Description("ручка для создания юзера /api/auth/register")
     public void newUserCreatePositiveTest() {
-
-        UserAuth user = new UserAuth(UserData.POSITIV_CREATE_LIST.get(0)) ;
-        deleteList.add(user);
-
+        
+        UserAuth user = createUser();
         Response response = api.registerUser(user.getCreate());
 
         stepCheckUserCreate(response);
@@ -79,6 +77,17 @@ public class CreateUserTest extends BaseUserForTest{
     public void newUserCreateWithoutPasswordNegativeTest() {
 
         UserCreate userCreate = UserData.NEGATIVE_CREATE_LIST.get(1);
+        Response response = api.registerUser(userCreate);
+        checkCreateNegative(response);
+
+    }
+
+    @Test
+    @DisplayName("Создание пользователя (негативный тест)")
+    @Description("ручка для создания пользователя /api/auth/register с отсутсвующим именем")
+    public void newUserCreateWithoutNameNegativeTest() {
+
+        UserCreate userCreate = UserData.NEGATIVE_CREATE_LIST.get(3);
         Response response = api.registerUser(userCreate);
         checkCreateNegative(response);
 

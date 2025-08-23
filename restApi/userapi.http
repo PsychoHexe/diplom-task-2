@@ -1,0 +1,31 @@
+### Использовался плагин https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+@urlApi=https://stellarburgers.nomoreparties.site/api
+@user_token=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YTI0OWY0OWVkMjgwMDAxYjY3ZmMxNCIsImlhdCI6MTc1NTQ2NjI2MywiZXhwIjoxNzU1NDY3NDYzfQ.9_2Z87JOdcWbwoZIU1Cw6mk9Gzdf8CYcTQHNxVR0gKA
+
+### Регистарция пользователя
+POST {{urlApi}}/auth/register HTTP/1.1
+Content-Type: application/json
+
+{
+"email": "wasd@ya.ru",
+"password": "1113wasd",
+"name": "Margo"
+}
+
+### Удаление пользователя
+DELETE {{urlApi}}/auth/user HTTP/1.1
+Authorization: {{user_token}}
+
+### Получение токена
+POST {{urlApi}}/auth/login  HTTP/1.1
+Content-Type: application/json
+
+{
+"email": "Wasd@ya.ru",
+"password": "1113wasd"
+}
+
+### Все заказы пользователя
+GET {{urlApi}}/orders  HTTP/1.1
+Content-Type: application/json
+Authorization: {{user_token}}

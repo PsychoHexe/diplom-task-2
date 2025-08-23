@@ -1,13 +1,15 @@
 package taskapi;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Ingredient {
-    String _id;
+    @SerializedName(value="_id")
+    String id;
     String type;
 
     public Ingredient(String id, String type) {
-        this._id = id;
+        this.id = id;
         this.type = type;
-    }
-    
+    }  
     
 }

@@ -10,7 +10,7 @@ public class OrderCreate {
     public OrderCreate(List<Ingredient> ingridients) {
         ingredients = new ArrayList<>();
         for (Ingredient elem : ingridients) {
-            this.ingredients.add(elem._id);
+            this.ingredients.add(elem.id);
         }
 
     }
